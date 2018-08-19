@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Matisse.Custom" parent="Matisse.Zhihu">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="page.bg">@color/colorWhite</item>
+        <item name="bottomToolbar.bg">@color/colorWhite</item>
+    </style>
+</resources>
