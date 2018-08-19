@@ -15,6 +15,7 @@ import android.net.Uri;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import android.content.pm.ActivityInfo;
 
@@ -222,7 +223,7 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
                 .countable(true)
                 .maxSelectable(maxImages)
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .imageEngine(new GlideEngine())
+                .imageEngine(new PicassoEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
     }
 
