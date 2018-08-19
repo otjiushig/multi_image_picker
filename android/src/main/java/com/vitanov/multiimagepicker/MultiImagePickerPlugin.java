@@ -2,6 +2,7 @@ package com.vitanov.multiimagepicker;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -50,15 +51,17 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import static android.media.ThumbnailUtils.OPTIONS_RECYCLE_INPUT;
 
 
-/** MultiImagePickerPlugin */
+/**
+ * MultiImagePickerPlugin
+ */
 public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry.ActivityResultListener {
     private static final String CHANNEL_NAME = "multi_image_picker";
     private static final String REQUEST_THUMBNAIL = "requestThumbnail";
     private static final String REQUEST_ORIGINAL = "requestOriginal";
     private static final String PICK_IMAGES = "pickImages";
     private static final String MAX_IMAGES = "maxImages";
-    private static final  int REQUEST_CODE_CHOOSE = 1001;
-    private static final  int REQUEST_CODE_GRANT_PERMISSIONS = 2001;
+    private static final int REQUEST_CODE_CHOOSE = 1001;
+    private static final int REQUEST_CODE_GRANT_PERMISSIONS = 2001;
     private final MethodChannel channel;
     private Activity activity;
     private Context context;
@@ -73,13 +76,16 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
         this.messenger = messenger;
     }
 
-    /** Plugin registration. */
+    /**
+     * Plugin registration.
+     */
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL_NAME);
         MultiImagePickerPlugin instance = new MultiImagePickerPlugin(registrar.activity(), registrar.context(), channel, registrar.messenger());
         registrar.addActivityResultListener(instance);
         channel.setMethodCallHandler(instance);
     }
+
     private class GetThumbnailTask extends AsyncTask<String, Void, Void> {
         BinaryMessenger messenger;
         String path;
@@ -158,6 +164,7 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
             return null;
         }
     }
+
     @Override
     public void onMethodCall(MethodCall call, Result result) {
         if (!setPendingMethodCallAndResult(call, result)) {
@@ -191,7 +198,7 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
         }
     }
 
-    private void openImagePicker(){
+    private void openImagePicker() {
 
         if (ContextCompat.checkSelfPermission(this.activity,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -228,7 +235,7 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
     }
 
     private static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+                                        String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
@@ -242,8 +249,7 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
             }
-        }
-        finally {
+        } finally {
             if (cursor != null)
                 cursor.close();
         }
@@ -277,7 +283,8 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
     }
 
     private void finishWithSuccess(List imagePathList) {
-        pendingResult.success(imagePathList);
+        if (pendingResult != null)
+            pendingResult.success(imagePathList);
         clearMethodCallAndResult();
     }
 
@@ -288,7 +295,8 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
     }
 
     private void finishWithSuccess(Boolean result) {
-        pendingResult.success(result);
+        if (pendingResult != null)
+            pendingResult.success(result);
         clearMethodCallAndResult();
     }
 
