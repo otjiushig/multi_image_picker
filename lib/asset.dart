@@ -26,6 +26,19 @@ class Asset {
     return _identifier;
   }
 
+  void releaseThumb() {
+    _thumbData = null;
+  }
+
+  void releaseOriginal() {
+    _imageData = null;
+  }
+
+  void release() {
+    releaseThumb();
+    releaseOriginal();
+  }
+
   Future<dynamic> requestThumbnail(int width, int height) {
     Completer completer = new Completer();
     BinaryMessages.setMessageHandler(_channel, (ByteData message) {
