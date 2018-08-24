@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed (v2.1.21)
+
+## 2018-08-24
+### Added
+- Add release(), releaseOriginal() and releaseThumb() methods to help clean up the image data when it is no longer needed
+
+### Changed (v2.1.02)
+
+## 2018-08-20
+### Fix
+- Fix null pointer exception on Android when finishing from another activity (thanks to xia-weiyang)
+
 ### Changed (v2.1.01)
 
 ## 2018-08-16

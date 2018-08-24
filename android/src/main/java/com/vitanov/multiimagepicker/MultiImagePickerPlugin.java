@@ -287,12 +287,15 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
     private void finishWithSuccess(List imagePathList) {
         if (pendingResult != null)
             pendingResult.success(imagePathList);
+<<<<<<< HEAD
         clearMethodCallAndResult();
     }
 
 
     private void finishWithSuccess(String imagePath) {
         pendingResult.success(imagePath);
+=======
+>>>>>>> f9f3edbe93acaef4e2474e9b74f103da3a19e1a9
         clearMethodCallAndResult();
     }
 
@@ -307,7 +310,8 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
     }
 
     private void finishWithError(String errorCode, String errorMessage) {
-        pendingResult.error(errorCode, errorMessage, null);
+        if (pendingResult != null)
+            pendingResult.error(errorCode, errorMessage, null);
         clearMethodCallAndResult();
     }
 
