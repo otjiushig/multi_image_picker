@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed (v2.1.22)
+
+## 2018-08-28
+### Added
+- Add originalWidth, originalHeight, isPortrait and isLandscape getters for the Asset class
+
 ### Changed (v2.1.21)
 
 ## 2018-08-24

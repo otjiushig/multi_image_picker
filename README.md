@@ -1,5 +1,8 @@
 # multi_image_picker
 
+[![build](https://img.shields.io/travis/Sh1d0w/multi_image_picker.svg)](https://pub.dartlang.org/packages/multi_image_picker)
+[![pub package](https://img.shields.io/pub/v/multi_image_picker.svg)](https://pub.dartlang.org/packages/multi_image_picker)
+
 > Flutter plugin that allows you to display multi image picker on iOS and Android.
 
 ## iOS

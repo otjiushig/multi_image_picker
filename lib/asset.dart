@@ -5,10 +5,15 @@ import 'package:multi_image_picker/picker.dart';
 
 class Asset {
   String _identifier;
+  int _originalWidth, _originalHeight;
   ByteData _thumbData;
   ByteData _imageData;
 
-  Asset(this._identifier);
+  Asset(
+    this._identifier,
+    this._originalWidth,
+    this._originalHeight,
+  );
 
   String get _channel {
     return 'multi_image_picker/image/$_identifier';
@@ -16,6 +21,22 @@ class Asset {
 
   ByteData get thumbData {
     return _thumbData;
+  }
+
+  int get originalWidth {
+    return _originalWidth;
+  }
+
+  int get originalHeight {
+    return _originalHeight;
+  }
+
+  bool get isLandscape {
+    return _originalWidth > _originalHeight;
+  }
+
+  bool get isPortrait {
+    return _originalWidth < _originalHeight;
   }
 
   ByteData get imageData {
@@ -39,7 +60,18 @@ class Asset {
     releaseOriginal();
   }
 
-  Future<dynamic> requestThumbnail(int width, int height) {
+  Future<dynamic> requestThumbnail(int width, int height) async {
+    assert(width != null);
+    assert(height != null);
+
+    if (width != null && width < 0) {
+      throw new ArgumentError.value(width, 'width cannot be negative');
+    }
+
+    if (height != null && height < 0) {
+      throw new ArgumentError.value(height, 'height cannot be negative');
+    }
+
     Completer completer = new Completer();
     BinaryMessages.setMessageHandler(_channel, (ByteData message) {
       _thumbData = message;

@@ -263,13 +263,30 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
             List<Uri> photos = Matisse.obtainResult(data);
-            List<HashMap<String, String>> result = new ArrayList<>(photos.size());
+            List<HashMap<String, Object>> result = new ArrayList<>(photos.size());
             for (Uri uri : photos) {
-                HashMap<String, String> map = new HashMap<>();
+                HashMap<String, Object> map = new HashMap<>();
                 map.put("identifier", uri.toString());
-                // TODO implement this
-                map.put("width", null);
-                map.put("height", null);
+
+                InputStream is = null;
+                Integer width = 0;
+                Integer height = 0;
+                try {
+                    is = context.getContentResolver().openInputStream(uri);
+                    BitmapFactory.Options dbo = new BitmapFactory.Options();
+                    dbo.inJustDecodeBounds = true;
+                    BitmapFactory.decodeStream(is, null, dbo);
+                    is.close();
+                    width = dbo.outWidth;
+                    height = dbo.outHeight;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                map.put("width", width);
+                map.put("height", height);
                 result.add(map);
             }
             finishWithSuccess(result);
