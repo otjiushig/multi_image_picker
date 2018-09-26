@@ -252,9 +252,15 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
     }
 
     private void presentPicker() {
+<<<<<<< HEAD
+        int maxImages = this.methodCall.argument(MAX_IMAGES);
+        Matisse.from(this.activity)
+                .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+=======
         int maxImages = MultiImagePickerPlugin.this.methodCall.argument(MAX_IMAGES);
         Matisse.from(MultiImagePickerPlugin.this.activity)
-                .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+                .choose(MimeType.ofImage())
+>>>>>>> 4ae4750a0dd585264a61af9d9580443b35a4201c
                 .countable(true)
                 .maxSelectable(maxImages)
                 .theme(R.style.Matisse_Custom)

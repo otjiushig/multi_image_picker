@@ -150,6 +150,10 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
                     result(true);
                 }
             }
+        case "refreshImage":
+            result(true) ;
+            break ;
+            
         default:
             result(FlutterMethodNotImplemented)
         }

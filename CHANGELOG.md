@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed (v2.2.10)
+
+## 2018-09-19
+### Changed
+- Update Image picker library to support Swift 4.2 and XCode 10
+- Remove obsolette file path in the asset class
+
+### Changed (v2.1.26)
+
+## 2018-09-10
+### Fixed
+- Fixed path not passed to the Asset class [#7](https://github.com/Sh1d0w/multi_image_picker/pull/7)
+
+### Changed (v2.1.25)
+
+## 2018-09-07
+### Added
+- Add Real file path and allow to refresh image gallery [#6](https://github.com/Sh1d0w/multi_image_picker/pull/6) (thanks CircleCurve)
+
+### Changed (v2.1.23)
+
+## 2018-08-31
+### Added
+- Improved the docs
+
 ### Changed (v2.1.22)
 
 ## 2018-08-28
