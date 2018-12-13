@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Matisse.Custom" parent="Matisse.Zhihu">
+
+    <style name="Matisse.Customize" parent="Matisse.Zhihu">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="page.bg">@color/colorWhite</item>
         <item name="bottomToolbar.bg">@color/colorWhite</item>
     </style>
+
+    <style name="Matisse.Default" parent="Matisse.Customize">
+        <item name="colorPrimary">#FFc5b278</item>
+        <item name="colorPrimaryDark">#FFc5b278</item>
+    </style>
+
+    <style name="Matisse.Black" parent="Matisse.Customize">
+        <item name="colorPrimary">#FF212121</item>
+        <item name="colorPrimaryDark">#FF212121</item>
+    </style>
+
+
 </resources>

@@ -280,7 +280,7 @@ public class MultiImagePickerPlugin implements MethodCallHandler, PluginRegistry
                     new CaptureStrategy(true, packageName + ".fileprovider")
                 )
                 .maxSelectable(maxImages)
-                .theme(R.style.Matisse_Custom)
+                .theme(StyleUtil.getCurrentStyle(activity))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .imageEngine(new PicassoEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
