@@ -2,56 +2,61 @@ import Flutter
 import UIKit
 import Photos
 import BSImagePicker
-    
+
 public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
     var controller: FlutterViewController!
     var imagesResult: FlutterResult?
     var messenger: FlutterBinaryMessenger;
-    
+
     let genericError = "500"
-    
+
     init(cont: FlutterViewController, messenger: FlutterBinaryMessenger) {
         self.controller = cont;
         self.messenger = messenger;
         super.init();
     }
-    
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "multi_image_picker", binaryMessenger: registrar.messenger())
-        
+
         let app =  UIApplication.shared
         let controller : FlutterViewController = app.delegate!.window!!.rootViewController as! FlutterViewController;
         let instance = SwiftMultiImagePickerPlugin.init(cont: controller, messenger: registrar.messenger())
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    
+
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch (call.method) {
         case "pickImages":
             let vc = BSImagePickerViewController()
             let arguments = call.arguments as! Dictionary<String, AnyObject>
             let maxImages = arguments["maxImages"] as! Int
+            let enableCamera = arguments["enableCamera"] as! Bool
             let options = arguments["iosOptions"] as! Dictionary<String, String>
             vc.maxNumberOfSelections = maxImages
+
+            if (enableCamera) {
+                vc.takePhotos = true
+            }
 
             if let backgroundColor = options["backgroundColor"] {
                 if (!backgroundColor.isEmpty) {
                     vc.backgroundColor = hexStringToUIColor(hex: backgroundColor)
                 }
             }
-            
+
             if let selectionFillColor = options["selectionFillColor"] {
                 if (!selectionFillColor.isEmpty) {
                     vc.selectionFillColor = hexStringToUIColor(hex: selectionFillColor)
                 }
             }
-            
+
             if let selectionShadowColor = options["selectionShadowColor"] {
                 if (!selectionShadowColor.isEmpty) {
                     vc.selectionShadowColor = hexStringToUIColor(hex: selectionShadowColor)
                 }
             }
-            
+
             if let selectionStrokeColor = options["selectionStrokeColor"] {
                 if (!selectionStrokeColor.isEmpty) {
                     vc.selectionStrokeColor = hexStringToUIColor(hex: selectionStrokeColor)
@@ -60,7 +65,7 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
 
             if let selectionTextColor = options["selectionTextColor"] {
                 if (!selectionTextColor.isEmpty) {
-                    vc.selectionTextAttributes[NSAttributedStringKey.foregroundColor] = hexStringToUIColor(hex: selectionTextColor)
+                    vc.selectionTextAttributes[NSAttributedString.Key.foregroundColor] = hexStringToUIColor(hex: selectionTextColor)
                 }
             }
 
@@ -93,20 +98,21 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
             let identifier = arguments["identifier"] as! String
             let width = arguments["width"] as! Int
             let height = arguments["height"] as! Int
-            
+            let quality = arguments["quality"] as! Int
+
             let manager = PHImageManager.default()
             let options = PHImageRequestOptions()
-            
+
             options.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat
             options.resizeMode = PHImageRequestOptionsResizeMode.exact
             options.isSynchronous = false
             options.isNetworkAccessAllowed = true
-            
+
             let assets: PHFetchResult = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil)
-            
+
             if (assets.count > 0) {
                 let asset: PHAsset = assets[0];
-                
+
                 let ID: PHImageRequestID = manager.requestImage(
                     for: asset,
                     targetSize: CGSize(width: width, height: height),
@@ -114,9 +120,9 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
                     options: options,
                     resultHandler: {
                         (image: UIImage?, info) in
-                        self.messenger.send(onChannel: "multi_image_picker/image/" + identifier, message: UIImageJPEGRepresentation(image!, 1.0))
+                        self.messenger.send(onChannel: "multi_image_picker/image/" + identifier, message: image?.jpegData(compressionQuality: CGFloat(quality / 100)))
                         })
-                
+
                 if(PHInvalidImageRequestID != ID) {
                     result(true);
                 }
@@ -124,18 +130,19 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
         case "requestOriginal":
             let arguments = call.arguments as! Dictionary<String, AnyObject>
             let identifier = arguments["identifier"] as! String
+            let quality = arguments["quality"] as! Int
             let manager = PHImageManager.default()
             let options = PHImageRequestOptions()
-            
+
             options.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat
             options.isSynchronous = false
             options.isNetworkAccessAllowed = true
-            
+
             let assets: PHFetchResult = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil)
-            
+
             if (assets.count > 0) {
                 let asset: PHAsset = assets[0];
-                
+
                 let ID: PHImageRequestID = manager.requestImage(
                     for: asset,
                     targetSize: PHImageManagerMaximumSize,
@@ -143,9 +150,9 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
                     options: options,
                     resultHandler: {
                         (image: UIImage?, info) in
-                        self.messenger.send(onChannel: "multi_image_picker/image/" + identifier, message: UIImageJPEGRepresentation(image!, 1.0))
+                        self.messenger.send(onChannel: "multi_image_picker/image/" + identifier, message: image!.jpegData(compressionQuality: CGFloat(quality / 100)))
                 })
-                
+
                 if(PHInvalidImageRequestID != ID) {
                     result(true);
                 }
@@ -153,7 +160,7 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
         case "refreshImage":
             result(true) ;
             break ;
-            
+
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -166,7 +173,7 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
             cString.remove(at: cString.startIndex)
         }
 
-        if ((cString.characters.count) != 6) {
+        if ((cString.count) != 6) {
             return UIColor.gray
         }
 

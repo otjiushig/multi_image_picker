@@ -33,6 +33,7 @@ void main() {
           <Matcher>[
             isMethodCall('pickImages', arguments: <String, dynamic>{
               'maxImages': 5,
+              'enableCamera': false,
               'iosOptions': CupertinoOptions().toJson(),
             }),
           ],
@@ -55,6 +56,7 @@ void main() {
           <Matcher>[
             isMethodCall('pickImages', arguments: <String, dynamic>{
               'maxImages': 5,
+              'enableCamera': false,
               'iosOptions': options.toJson(),
             }),
           ],
@@ -71,13 +73,15 @@ void main() {
 
     test('requestOriginal accepts correct params', () async {
       const String id = 'SOME_ID';
-      await MultiImagePicker.requestOriginal(id);
+      const int quality = 100;
+      await MultiImagePicker.requestOriginal(id, quality);
 
       expect(
         log,
         <Matcher>[
           isMethodCall('requestOriginal', arguments: <String, dynamic>{
             'identifier': id,
+            'quality': quality,
           }),
         ],
       );
@@ -87,8 +91,9 @@ void main() {
       const String id = 'SOME_ID';
       const int width = 100;
       const int height = 200;
+      const int quality = 100;
       test('accepts correct params', () async {
-        await MultiImagePicker.requestThumbnail(id, width, height);
+        await MultiImagePicker.requestThumbnail(id, width, height, quality);
 
         expect(
           log,
@@ -97,6 +102,7 @@ void main() {
               'identifier': id,
               'width': width,
               'height': height,
+              'quality': quality,
             }),
           ],
         );
@@ -104,12 +110,23 @@ void main() {
 
       test('does not accept a negative width or height', () {
         expect(
-          MultiImagePicker.requestThumbnail(id, -100, height),
+          MultiImagePicker.requestThumbnail(id, -100, height, quality),
           throwsArgumentError,
         );
 
         expect(
-          MultiImagePicker.requestThumbnail(id, width, -100),
+          MultiImagePicker.requestThumbnail(id, width, -100, quality),
+          throwsArgumentError,
+        );
+      });
+      test('does not accept invalid quality', () {
+        expect(
+          MultiImagePicker.requestThumbnail(id, -width, height, -100),
+          throwsArgumentError,
+        );
+
+        expect(
+          MultiImagePicker.requestThumbnail(id, width, height, 200),
           throwsArgumentError,
         );
       });

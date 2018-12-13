@@ -18,6 +18,9 @@ class MultiImagePicker {
   /// to customize the look of the image picker. On android
   /// you have to provide custom styles via resource files
   /// as specified in the official docs on Github.
+  /// As from version  2.1.40 a new parameter [enableCamera]
+  /// was added, which allows the user to take a picture
+  /// directly from the gallery.
   ///
   /// This method returns list of [Asset] objects. Because
   /// they are just placeholders containing the actual
@@ -27,6 +30,7 @@ class MultiImagePicker {
   /// you can refer to the docs for the Asset class.
   static Future<List<Asset>> pickImages({
     @required int maxImages,
+    bool enableCamera = false,
     CupertinoOptions options = const CupertinoOptions(),
   }) async {
     assert(maxImages != null);
@@ -38,6 +42,7 @@ class MultiImagePicker {
     final List<dynamic> images =
         await _channel.invokeMethod('pickImages', <String, dynamic>{
       'maxImages': maxImages,
+      'enableCamera': enableCamera,
       'iosOptions': options.toJson(),
     });
 
@@ -49,8 +54,8 @@ class MultiImagePicker {
     return assets;
   }
 
-  /// Requests a thumbnail with [width] and [height]
-  /// for a given [identifier].
+  /// Requests a thumbnail with [width], [height]
+  /// and [quality] for a given [identifier].
   ///
   /// This method is used by the asset class, you
   /// should not invoke it manually. For more info
@@ -58,7 +63,7 @@ class MultiImagePicker {
   ///
   /// The actual image data is sent via BinaryChannel.
   static Future<bool> requestThumbnail(
-      String identifier, int width, int height) async {
+      String identifier, int width, int height, int quality) async {
     assert(identifier != null);
     assert(width != null);
     assert(height != null);
@@ -71,11 +76,17 @@ class MultiImagePicker {
       throw new ArgumentError.value(height, 'height cannot be negative');
     }
 
-    bool ret =
-        await _channel.invokeMethod("requestThumbnail", <String, dynamic>{
+    if (quality < 0 || quality > 100) {
+      throw new ArgumentError.value(
+          quality, 'quality should be in range 0-100');
+    }
+
+    bool ret = await _channel.invokeMethod(
+        "requestThumbnail", <String, dynamic>{
       "identifier": identifier,
       "width": width,
       "height": height,
+      "quality": quality
     });
     return ret;
   }
@@ -88,9 +99,10 @@ class MultiImagePicker {
   /// refer to [Asset] class docs.
   ///
   /// The actual image data is sent via BinaryChannel.
-  static Future<bool> requestOriginal(String identifier) async {
+  static Future<bool> requestOriginal(String identifier, quality) async {
     bool ret = await _channel.invokeMethod("requestOriginal", <String, dynamic>{
       "identifier": identifier,
+      "quality": quality,
     });
     return ret;
   }

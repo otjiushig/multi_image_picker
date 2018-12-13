@@ -4,6 +4,85 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed (v2.2.55)
+
+## 2018-11-19
+### Fixed
+- Define module_headers as per http://blog.cocoapods.org/CocoaPods-1.5.0/
+
+### Changed (v2.2.54)
+
+## 2018-11-19
+### Fixed
+- Add s.static_framework = true as per https://github.com/flutter/flutter/issues/14161
+
+### Changed (v2.2.53)
+
+## 2018-11-08
+### Fixed
+- Added new optional parameter `quality` to `requestThumb` and `requestOriginal` methods.
+
+### Changed (v2.2.52)
+
+## 2018-11-07
+### Fixed
+- Don't rescale the image when decoding it on Android
+
+### Changed (v2.2.50)
+
+## 2018-11-07
+### Fixed
+- Correctly handle image orientation on Android phones [ref](https://stackoverflow.com/questions/14066038/why-does-an-image-captured-using-camera-intent-gets-rotated-on-some-devices-on-a?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
+
+### Changed (v2.2.47)
+
+## 2018-11-06
+### Changed
+- Increase thumb quality on Android
+
+### Changed (v2.2.45)
+
+## 2018-11-06
+### Fixed
+- Ask for CAMERA permission on Android, and fix opening of the picker after permission grant.
+
+### Changed (v2.2.44)
+
+## 2018-11-06
+### Fixed
+- Use correct application id on Android devices when setting up the camera provider
+
+### Changed (v2.2.43)
+
+## 2018-11-02
+### Fixed
+- requestOriginal now works correctly on Android
+
+### Changed (v2.2.42)
+
+## 2018-11-02
+### Fixed
+- Use app specific content provider, updated README.md
+
+### Changed (v2.2.41)
+
+## 2018-11-02
+### Changed
+- Commented out example file provider as it gets included in production bundle. If you want to test the example just uncomment it in the android manifest.
+
+### Changed (v2.2.40)
+
+## 2018-11-02
+### Added
+- Added new picker option `enableCamera` which allows the user to take pictures directly from the gallery. For more info how to enable this please see README.md
+
+### Changed (v2.2.30)
+
+## 2018-10-28
+### Fixed
+- iOS 12 and Swift 4.2 language fixes
+- Important: In your XCode build setting you must set Swift Version to 4.2
+
 ### Changed (v2.2.10)
 
 ## 2018-09-19
