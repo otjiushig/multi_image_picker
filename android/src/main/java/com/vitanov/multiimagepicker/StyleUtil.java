@@ -25,6 +25,15 @@ public class StyleUtil {
         switch (themeKey){
             case "default": return R.style.Matisse_Default;
             case "black": return R.style.Matisse_Black;
+            case "blue": return R.style.Matisse_Blue;
+            case "grey": return R.style.Matisse_Grey;
+            case "brown": return R.style.Matisse_Brown;
+            case "blueLight": return R.style.Matisse_BlueLight;
+            case "cyan": return R.style.Matisse_Cyan;
+            case "green": return R.style.Matisse_Green;
+            case "red": return R.style.Matisse_Red;
+            case "pink": return R.style.Matisse_Pink;
+            case "orange": return R.style.Matisse_Orange;
         }
 
         return R.style.Matisse_Customize;

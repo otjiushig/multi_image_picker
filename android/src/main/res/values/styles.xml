@@ -18,5 +18,49 @@
         <item name="colorPrimaryDark">#FF212121</item>
     </style>
 
+    <style name="Matisse.Grey" parent="Matisse.Customize">
+        <item name="colorPrimary">#FF757575</item>
+        <item name="colorPrimaryDark">#FF757575</item>
+    </style>
+
+    <style name="Matisse.Blue" parent="Matisse.Customize">
+        <item name="colorPrimary">#FF1976D2</item>
+        <item name="colorPrimaryDark">#FF1976D2</item>
+    </style>
+
+    <style name="Matisse.BlueLight" parent="Matisse.Customize">
+        <item name="colorPrimary">#FF0091EA</item>
+        <item name="colorPrimaryDark">#FF0091EA</item>
+    </style>
+
+    <style name="Matisse.Cyan" parent="Matisse.Customize">
+        <item name="colorPrimary">#FF00B8D4</item>
+        <item name="colorPrimaryDark">#FF00B8D4</item>
+    </style>
+
+    <style name="Matisse.Red" parent="Matisse.Customize">
+        <item name="colorPrimary">#FFC62828</item>
+        <item name="colorPrimaryDark">#FFC62828</item>
+    </style>
+
+    <style name="Matisse.Pink" parent="Matisse.Customize">
+        <item name="colorPrimary">#FFEC407A</item>
+        <item name="colorPrimaryDark">#FFEC407A</item>
+    </style>
+
+    <style name="Matisse.Orange" parent="Matisse.Customize">
+        <item name="colorPrimary">#FFF57C00</item>
+        <item name="colorPrimaryDark">#FFF57C00</item>
+    </style>
+
+    <style name="Matisse.Green" parent="Matisse.Customize">
+        <item name="colorPrimary">#FF43A047</item>
+        <item name="colorPrimaryDark">#FF43A047</item>
+    </style>
+
+    <style name="Matisse.Brown" parent="Matisse.Customize">
+        <item name="colorPrimary">#FF6D4C41</item>
+        <item name="colorPrimaryDark">#FF6D4C41</item>
+    </style>
 
 </resources>
